@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "group")
+@Table(name = "\"group\"")
 public class Group {
 
     @Id

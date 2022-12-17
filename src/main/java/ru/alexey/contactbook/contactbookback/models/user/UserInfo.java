@@ -1,5 +1,9 @@
 package ru.alexey.contactbook.contactbookback.models.user;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -15,6 +19,7 @@ public class UserInfo {
 
     @OneToOne
     @JoinColumn(name = "for_user", referencedColumnName = "id")
+    @JsonManagedReference
     private User user;
 
     @Column(name = "name")
@@ -92,5 +97,17 @@ public class UserInfo {
     @Override
     public int hashCode() {
         return Objects.hash(id, user, name, surname, patronymic, department);
+    }
+
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "id=" + id +
+                ", user=" + user +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", patronymic='" + patronymic + '\'' +
+                ", department=" + department +
+                '}';
     }
 }

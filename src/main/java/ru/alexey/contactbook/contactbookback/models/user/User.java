@@ -1,5 +1,7 @@
 package ru.alexey.contactbook.contactbookback.models.user;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import ru.alexey.contactbook.contactbookback.models.contact.Group;
@@ -10,7 +12,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "user")
+@Table(name = "\"user\"")
 public class User {
 
     @Id
@@ -30,6 +32,7 @@ public class User {
     private Role role;
 
     @OneToOne(mappedBy = "user")
+    @JsonBackReference
     private UserInfo info;
 
     @OneToMany(mappedBy = "creator")
@@ -130,5 +133,20 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hash(id, login, password);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                ", info=" + info +
+                ", contacts=" + contacts +
+                ", groups=" + groups +
+                ", groupsReadPermission=" + groupsReadPermission +
+                ", groupsWritePermission=" + groupsWritePermission +
+                '}';
     }
 }
