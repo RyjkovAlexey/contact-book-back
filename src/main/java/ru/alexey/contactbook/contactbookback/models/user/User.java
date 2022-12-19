@@ -3,10 +3,10 @@ package ru.alexey.contactbook.contactbookback.models.user;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
 import ru.alexey.contactbook.contactbookback.models.contact.Group;
 import ru.alexey.contactbook.contactbookback.models.contact.Contact;
 
+import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -31,9 +31,21 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
-    @OneToOne(mappedBy = "user")
-    @JsonBackReference
-    private UserInfo info;
+    @Column(name = "deleted")
+    private Boolean deleted;
+
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "surname")
+    private String surname;
+
+    @Column(name = "patronymic")
+    private String patronymic;
+
+    @ManyToOne
+    @JoinColumn(name = "department", referencedColumnName = "id")
+    private Department department;
 
     @OneToMany(mappedBy = "creator")
     private Set<Contact> contacts;
@@ -82,14 +94,6 @@ public class User {
         this.role = role;
     }
 
-    public UserInfo getInfo() {
-        return info;
-    }
-
-    public void setInfo(UserInfo info) {
-        this.info = info;
-    }
-
     public Set<Contact> getContacts() {
         return contacts;
     }
@@ -122,6 +126,46 @@ public class User {
         this.groupsWritePermission = groupsWritePermission;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getPatronymic() {
+        return patronymic;
+    }
+
+    public void setPatronymic(String patronymic) {
+        this.patronymic = patronymic;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -142,7 +186,10 @@ public class User {
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 ", role=" + role +
-                ", info=" + info +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", patronymic='" + patronymic + '\'' +
+                ", department=" + department +
                 ", contacts=" + contacts +
                 ", groups=" + groups +
                 ", groupsReadPermission=" + groupsReadPermission +

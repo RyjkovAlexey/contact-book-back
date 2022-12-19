@@ -3,10 +3,9 @@ package ru.alexey.contactbook.contactbookback.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.alexey.contactbook.contactbookback.exceptions.NotFoundUserException;
 import ru.alexey.contactbook.contactbookback.models.user.Role;
 import ru.alexey.contactbook.contactbookback.models.user.User;
-import ru.alexey.contactbook.contactbookback.models.user.UserInfo;
-import ru.alexey.contactbook.contactbookback.repositories.UsersInfoRepository;
 import ru.alexey.contactbook.contactbookback.repositories.UsersRepository;
 
 import java.util.List;
@@ -17,31 +16,51 @@ import java.util.Optional;
 public class UserService {
 
     private final UsersRepository usersRepository;
-    private final UsersInfoRepository usersInfoRepository;
 
     @Autowired
-    public UserService(UsersRepository usersRepository, UsersInfoRepository userInfoRepository) {
+    public UserService(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
-        this.usersInfoRepository = userInfoRepository;
     }
 
-    public List<User> findAll() {
-        return usersRepository.findAll();
+    public List<User> findAll(boolean showDeleted) {
+        return usersRepository.findUsersByDeletedNot(showDeleted);
     }
 
-    public Optional<User> findById(int id) {
-        return usersRepository.findById(id);
+    public User findById(int id) {
+        Optional<User> optionalUser = usersRepository.findById(id);
+
+        optionalUser.orElseThrow(() -> new NotFoundUserException(id));
+
+        return optionalUser.get();
     }
 
     @Transactional(readOnly = false)
     public User save(User user) {
         user.setRole(Role.USER);
-        UserInfo userInfo = user.getInfo();
-        user.setInfo(null);
-        User savedUser = usersRepository.saveAndFlush(user);
-        userInfo.setUser(savedUser);
-        usersInfoRepository.save(userInfo);
-        savedUser.setInfo(userInfo);
-        return savedUser;
+        return usersRepository.saveAndFlush(user);
+    }
+
+    @Transactional(readOnly = false)
+    public User update(int id, User updatedUser) {
+        Optional<User> optionalUser = usersRepository.findById(id);
+
+        optionalUser.ifPresent((user) -> {
+            user.setName(updatedUser.getName());
+            user.setSurname(updatedUser.getSurname());
+            user.setPatronymic(updatedUser.getPatronymic());
+        });
+
+        optionalUser.orElseThrow(() -> new NotFoundUserException(id));
+
+        return usersRepository.saveAndFlush(optionalUser.get());
+    }
+
+    public void remove(int id) {
+        Optional<User> optionalUser = usersRepository.findById(id);
+
+        optionalUser.ifPresent(user -> user.setDeleted(true));
+        optionalUser.orElseThrow(() -> new NotFoundUserException(id));
+
+        usersRepository.save(optionalUser.get());
     }
 }

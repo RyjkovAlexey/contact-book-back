@@ -1,7 +1,6 @@
 package ru.alexey.contactbook.contactbookback.models.contact;
 
-import jakarta.persistence.*;
-
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
 

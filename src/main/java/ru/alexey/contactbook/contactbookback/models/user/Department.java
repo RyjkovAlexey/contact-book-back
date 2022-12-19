@@ -1,9 +1,6 @@
 package ru.alexey.contactbook.contactbookback.models.user;
 
-import jakarta.persistence.*;
-import ru.alexey.contactbook.contactbookback.models.user.UserInfo;
-
-import java.util.List;
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
 
@@ -20,7 +17,7 @@ public class Department {
     private String name;
 
     @OneToMany(mappedBy = "department")
-    private Set<UserInfo> usersInDepartment;
+    private Set<User> usersInDepartment;
 
     public Department() {
     }
@@ -41,11 +38,11 @@ public class Department {
         this.name = name;
     }
 
-    public Set<UserInfo> getUsersInDepartment() {
+    public Set<User> getUsersInDepartment() {
         return usersInDepartment;
     }
 
-    public void setUsersInDepartment(Set<UserInfo> usersInDepartment) {
+    public void setUsersInDepartment(Set<User> usersInDepartment) {
         this.usersInDepartment = usersInDepartment;
     }
 
