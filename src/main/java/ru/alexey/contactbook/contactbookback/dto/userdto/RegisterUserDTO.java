@@ -1,15 +1,21 @@
-package ru.alexey.contactbook.contactbookback.dto;
+package ru.alexey.contactbook.contactbookback.dto.userdto;
 
-import ru.alexey.contactbook.contactbookback.models.user.Role;
-
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-public class UpdateUserDTO {
+public class RegisterUserDTO {
+    @NotEmpty(message = "login should not be empty")
+    @Size(min = 6, max = 100, message = "Login length must be more than 6 and not more than 100 characters")
+    private String login;
+
+    @NotEmpty(message = "password should not be empty")
+    @Size(min = 6, message = "password must be at least 6 characters long")
+    private String password;
+
     @NotEmpty(message = "name should not be empty")
     @Size(max = 100, message = "Name cannot be more than 100 characters")
     private String name;
-
     @NotEmpty(message = "surname should not be empty")
     @Size(max = 100, message = "Surname cannot be more than 100 characters")
     private String surname;
@@ -17,6 +23,21 @@ public class UpdateUserDTO {
     @Size(max = 100, message = "Patronymic cannot be more than 100 characters")
     private String patronymic;
 
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getName() {
         return name;

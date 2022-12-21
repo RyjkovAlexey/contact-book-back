@@ -1,4 +1,4 @@
-package ru.alexey.contactbook.contactbookback.dto;
+package ru.alexey.contactbook.contactbookback.dto.userdto;
 
 public class UpdatedUserDTO {
     private int id;

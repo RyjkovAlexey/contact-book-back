@@ -95,4 +95,16 @@ public class Contact {
     public int hashCode() {
         return Objects.hash(id, name, creator);
     }
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", creator=" + creator +
+                ", details=" + details +
+                ", labels=" + labels +
+                ", notes=" + notes +
+                '}';
+    }
 }

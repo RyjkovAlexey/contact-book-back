@@ -1,4 +1,4 @@
-package ru.alexey.contactbook.contactbookback.dto;
+package ru.alexey.contactbook.contactbookback.dto.userdto;
 
 import ru.alexey.contactbook.contactbookback.models.user.Role;
 
