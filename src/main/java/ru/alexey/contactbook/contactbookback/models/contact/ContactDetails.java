@@ -20,8 +20,7 @@ public class ContactDetails {
     private String details;
 
     @Column(name = "type")
-    @Enumerated(value = EnumType.STRING)
-    private ContactDetailType type;
+    private String type;
 
     public ContactDetails() {
     }
@@ -50,11 +49,11 @@ public class ContactDetails {
         this.details = details;
     }
 
-    public ContactDetailType getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(ContactDetailType type) {
+    public void setType(String type) {
         this.type = type;
     }
 

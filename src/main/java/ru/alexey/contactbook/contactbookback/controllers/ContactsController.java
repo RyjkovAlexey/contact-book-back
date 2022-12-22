@@ -61,6 +61,16 @@ public class ContactsController {
         return ResponseEntity.ok(contactDTOS);
     }
 
+    @GetMapping("/getWithUser/{id}")
+    public ResponseEntity<List<ContactDTO>> getContactsWithUser(
+            @PathVariable int id
+    ) {
+        List<Contact> contacts = contactService.findAllWithUser(id);
+        List<ContactDTO> contactDTOS = contacts.stream().map(this::convertToDTO).toList();
+
+        return ResponseEntity.ok(contactDTOS);
+    }
+
     private ContactDTO convertToDTO(Contact contact) {
         ContactDTO contactDTO = new ContactDTO();
 

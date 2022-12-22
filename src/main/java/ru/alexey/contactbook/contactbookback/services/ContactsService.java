@@ -59,4 +59,10 @@ public class ContactsService {
         Optional<Label> label = labelsRepository.findById(id);
         return contactsRepository.getContactByLabelsContains(label.get());
     }
+
+    public List<Contact> findAllWithUser(int id) {
+        User owner = usersRepository.getById(id);
+
+        return contactsRepository.getContactsByCreator(owner);
+    }
 }

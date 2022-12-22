@@ -7,6 +7,10 @@ public class NotFoundUserException extends BaseUserException {
         super(String.format("unable to find optionalUser with id: %s", id));
     }
 
+    public NotFoundUserException(String name) {
+        super(String.format("unable to find optionalUser with name: %s", name));
+    }
+
     @Override
     public HttpStatus httpStatus() {
         return HttpStatus.NOT_FOUND;

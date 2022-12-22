@@ -1,11 +1,9 @@
 package ru.alexey.contactbook.contactbookback.dto.contactdto;
 
-import ru.alexey.contactbook.contactbookback.models.contact.ContactDetailType;
-
 public class ContactDetailsDTO {
     private int id;
     private String details;
-    private ContactDetailType type;
+    private String type;
 
     public int getId() {
         return id;
@@ -23,11 +21,11 @@ public class ContactDetailsDTO {
         this.details = details;
     }
 
-    public ContactDetailType getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(ContactDetailType type) {
+    public void setType(String type) {
         this.type = type;
     }
 }
