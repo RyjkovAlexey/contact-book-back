@@ -5,6 +5,7 @@ import org.hibernate.Hibernate;
 import ru.alexey.contactbook.contactbookback.model.user.Account;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -33,7 +34,7 @@ public class Group {
             inverseJoinColumns = {@JoinColumn(name = "user_id")}
     )
     @ToString.Exclude
-    private Set<Account> readPermissions;
+    private Set<Account> readPermissions = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
@@ -42,7 +43,7 @@ public class Group {
             inverseJoinColumns = {@JoinColumn(name = "user_id")}
     )
     @ToString.Exclude
-    private Set<Account> writePermissions;
+    private Set<Account> writePermissions = new HashSet<>();
 
     public Group() {
     }

@@ -27,8 +27,8 @@ CREATE TABLE "account"
 
 CREATE TABLE role_user
 (
-    user_id INT REFERENCES "account" (id),
-    role_id INT REFERENCES "role" (id),
+    user_id INT REFERENCES "account" (id) ON DELETE CASCADE,
+    role_id INT REFERENCES "role" (id) ON DELETE CASCADE,
     PRIMARY KEY (user_id, role_id)
 );
 
@@ -76,18 +76,21 @@ CREATE TABLE "group"
 
 CREATE TABLE read_permission
 (
-    group_id INT REFERENCES "group" (id)   NOT NULL,
-    user_id  INT REFERENCES "account" (id) NOT NULL,
+    group_id INT REFERENCES "group" (id) ON DELETE CASCADE   NOT NULL,
+    user_id  INT REFERENCES "account" (id) ON DELETE CASCADE NOT NULL,
     PRIMARY KEY (group_id, user_id)
 );
 
 CREATE TABLE write_permission
 (
-    group_id INT REFERENCES "group" (id)   NOT NULL,
-    user_id  INT REFERENCES "account" (id) NOT NULL,
+    group_id INT REFERENCES "group" (id) ON DELETE CASCADE   NOT NULL,
+    user_id  INT REFERENCES "account" (id) ON DELETE CASCADE NOT NULL,
     PRIMARY KEY (group_id, user_id)
 );
 
 INSERT INTO role (name, readable_name)
 VALUES ('ROLE_USER', 'Пользователь'),
-       ('ROLE_ADMIN', 'Администратор')
+       ('ROLE_ADMIN', 'Администратор');
+
+ALTER TABLE account
+    DROP COLUMN role;

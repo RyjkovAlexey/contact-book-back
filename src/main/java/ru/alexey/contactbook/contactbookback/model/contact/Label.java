@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -28,7 +29,7 @@ public class Label {
             inverseJoinColumns = {@JoinColumn(name = "contact_id")}
     )
     @ToString.Exclude
-    private Set<Contact> contacts;
+    private Set<Contact> contacts = new HashSet<>();
 
     public Label() {
     }

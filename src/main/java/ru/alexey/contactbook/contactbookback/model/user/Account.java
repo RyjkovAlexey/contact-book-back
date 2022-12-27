@@ -2,6 +2,7 @@ package ru.alexey.contactbook.contactbookback.model.user;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.springframework.lang.Nullable;
 import ru.alexey.contactbook.contactbookback.model.contact.Contact;
 import ru.alexey.contactbook.contactbookback.model.contact.Group;
 
@@ -14,7 +15,7 @@ import java.util.Set;
 @Setter
 @ToString
 @Entity
-@Table(name = "\"user\"")
+@Table(name = "\"account\"")
 public class Account {
 
     @Id
@@ -39,6 +40,7 @@ public class Account {
 
     @ManyToOne
     @JoinColumn(name = "department", referencedColumnName = "id")
+    @Nullable
     private Department department;
 
     @OneToMany(mappedBy = "creator")

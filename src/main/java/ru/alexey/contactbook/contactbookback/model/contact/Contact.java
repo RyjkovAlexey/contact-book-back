@@ -5,6 +5,7 @@ import org.hibernate.Hibernate;
 import ru.alexey.contactbook.contactbookback.model.user.Account;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -28,15 +29,15 @@ public class Contact {
 
     @OneToMany(mappedBy = "contact")
     @ToString.Exclude
-    private Set<ContactDetails> details;
+    private Set<ContactDetails> details = new HashSet<>();
 
     @ManyToMany(mappedBy = "contacts")
     @ToString.Exclude
-    private Set<Label> labels;
+    private Set<Label> labels = new HashSet<>();
 
     @OneToMany(mappedBy = "contact")
     @ToString.Exclude
-    private Set<Note> notes;
+    private Set<Note> notes = new HashSet<>();
 
     public Contact() {
     }
