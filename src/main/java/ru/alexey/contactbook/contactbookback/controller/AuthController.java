@@ -10,6 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import ru.alexey.contactbook.contactbookback.dto.AccountDTO;
 import ru.alexey.contactbook.contactbookback.model.user.Account;
 import ru.alexey.contactbook.contactbookback.request.AuthenticationRequest;
 import ru.alexey.contactbook.contactbookback.request.SignUpRequest;
@@ -55,6 +56,9 @@ public class AuthController {
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
         final AuthenticationResponse authenticationResponse = new AuthenticationResponse();
+        final Account account = accountsService.findByUsername(userDetails.getUsername());
+
+        authenticationResponse.setAccountDTO(modelMapper.map(account, AccountDTO.class));
         authenticationResponse.setAccessToken(jwtTokenService.generateToken(userDetails));
         return authenticationResponse;
     }

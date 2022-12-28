@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.alexey.contactbook.contactbookback.dto.ContactDTO;
 import ru.alexey.contactbook.contactbookback.model.contact.Contact;
 import ru.alexey.contactbook.contactbookback.model.user.Account;
 import ru.alexey.contactbook.contactbookback.model.user.Role;
@@ -78,5 +79,10 @@ public class AccountsService {
                 .orElseThrow(() -> new UsernameNotFoundException(String.format("User with id: %s not found", id)));
 
         return contactsRepository.findContactsByCreator(account);
+    }
+
+    public Account findByUsername(String username) {
+        return accountsRepository.getByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(String.format("User with username: %s not found", username)));
     }
 }
